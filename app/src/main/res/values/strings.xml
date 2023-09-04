@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">ToDoList</string>
-    <string name="Settings">Settings</string>
+    <string name="drawer_open">Drawer Open</string>
+    <string name="drawer_close">Drawer Close</string>
+
+    <string name="action_settings">Settings</string>
 </resources>
