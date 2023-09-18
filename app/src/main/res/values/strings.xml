@@ -2,6 +2,6 @@
     <string name="app_name">ToDoList</string>
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_close">Drawer Close</string>
-
+    <string name="List_name">リスト名</string>
     <string name="action_settings">Settings</string>
 </resources>

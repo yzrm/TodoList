@@ -8,10 +8,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -20,7 +20,9 @@ import com.google.android.material.snackbar.Snackbar;
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
 
-    static String TAG = "MainActivity";
+    BottomSheetBehavior mBottomSheetBehavior;
+
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,21 +31,26 @@ public class MainActivity extends AppCompatActivity
 
         //fab
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Hallow Snackbar", Snackbar.LENGTH_SHORT)
-                        .setAction("Action",null).show();
-                Log.d(TAG, "fab Selected!");
+        fab.setOnClickListener(view -> {
+            Log.d(TAG, "fab Selected!");
+
+            //bottomSheet
+            View bottomView = findViewById(R.id.bottom_sheet_layout);
+            mBottomSheetBehavior = BottomSheetBehavior.from(bottomView);
+
+            if ( mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED ){
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            }else{
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
         });
 
-    //Toolbar
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
+        //Toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-    //DrawerToggle
-    DrawerLayout drawer =
+        //DrawerToggle
+        DrawerLayout drawer =
             (DrawerLayout) findViewById(R.id.drawerLayout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar,
@@ -57,18 +64,6 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.options, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (R.id.action_settings == item.getItemId()) {
-            Log.d(TAG, "Setting Selected!");
-        }
-        return  true;
-    }
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         if (R.id.menu_item1 == item.getItemId()) {
