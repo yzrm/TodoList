@@ -46,8 +46,9 @@ public class MainActivity extends AppCompatActivity
         });
 
         //Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
 
         //DrawerToggle
         DrawerLayout drawer =

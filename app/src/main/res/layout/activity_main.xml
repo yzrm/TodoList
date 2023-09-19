@@ -26,61 +26,74 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:background="@color/baseBg">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hello World!"
+                android:layout_gravity="center"
                 android:textSize="36sp" />
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/fab_margin"
+                android:src="@drawable/ic_add"
+                android:contentDescription="NEW" />
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@android:drawable/ic_menu_add"
-            android:contentDescription="NEW" />
+        </FrameLayout>
 
     <!--
     Bottom_アクションバー分Topにマージン
     -->
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/bottom_sheet_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingTop="?attr/actionBarSize"
-            android:background="@color/white"
+            app:layout_behavior="@string/bottom_sheet_behavior"
             app:behavior_peekHeight="0dp"
-            app:behavior_hideable="true"
-            app:layout_behavior="@string/bottom_sheet_behavior">
+            app:behavior_hideable="true">
 
-            <View
-                android:layout_width="45dp"
-                android:layout_height="5dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/gray"
-                android:layout_gravity="center"/>
-
-            <EditText
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="?attr/actionBarSize"
+                android:background="@color/white">
+
+
+                <View
+                    android:layout_width="45dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/gray"
+                    android:layout_gravity="center"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:hint="@string/List_name"
+                    android:maxLength="18"/>
+
+            </LinearLayout>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab2"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:hint="@string/List_name"
-                android:maxLength="18"/>
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/fab_margin"
+                android:src="@drawable/ic_check"
+                android:contentDescription="NEW" />
 
-        </LinearLayout>
-
+        </FrameLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -88,8 +101,30 @@
     android:id="@+id/navigationView"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    app:headerLayout="@layout/drawer_header"
-    app:menu="@menu/drawer"
-    android:layout_gravity="start"/>
+    android:layout_gravity="start">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="テスト"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="テスト"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="テスト"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>
