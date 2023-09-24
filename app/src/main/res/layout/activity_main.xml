@@ -26,16 +26,22 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+        <!--
+    Bottom_アクションバー分Topにマージン
+    -->
         <FrameLayout
+            android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/baseBg">
+            android:background="@color/baseBg"
+            app:layout_anchor="@+id/frameLayout"
+            app:layout_anchorGravity="center">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hello World!"
                 android:layout_gravity="center"
+                android:text="Hello World!"
                 android:textSize="36sp" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -44,14 +50,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
                 android:layout_margin="@dimen/fab_margin"
-                android:src="@drawable/ic_add"
-                android:contentDescription="NEW" />
+                android:contentDescription="NEW"
+                android:src="@drawable/ic_add" />
 
         </FrameLayout>
 
-    <!--
-    Bottom_アクションバー分Topにマージン
-    -->
         <FrameLayout
             android:id="@+id/bottom_sheet_layout"
             android:layout_width="match_parent"
@@ -107,22 +110,68 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:paddingTop="80dp" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="0dp"
+            android:background="@drawable/border"
+            android:gravity="center_vertical"
+            android:text="全てのタスク"
+            android:drawablePadding="20dp"
+            app:drawableLeftCompat="@drawable/box" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="テスト"/>
+            android:paddingStart="20dp"
+            android:paddingEnd="0dp"
+            android:gravity="center_vertical"
+            android:text="リスト"
+            android:drawablePadding="20dp"
+            app:drawableLeftCompat="@drawable/list" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="テスト"/>
+            android:paddingStart="20dp"
+            android:paddingEnd="0dp"
+            android:gravity="center_vertical"
+            android:text="テスト"
+            android:drawablePadding="20dp"
+            app:drawableLeftCompat="@drawable/circle" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="テスト"/>
+            android:paddingStart="20dp"
+            android:paddingEnd="0dp"
+            android:gravity="center_vertical"
+            android:text="テスト"
+            android:drawablePadding="20dp"
+            app:drawableLeftCompat="@drawable/circle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="0dp"
+            android:gravity="center_vertical"
+            android:text="テスト"
+            android:drawablePadding="20dp"
+            app:drawableLeftCompat="@drawable/circle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="0dp"
+            android:gravity="center_vertical"
+            android:text="テスト"
+            android:drawablePadding="20dp"
+            app:drawableLeftCompat="@drawable/circle" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </com.google.android.material.navigation.NavigationView>
