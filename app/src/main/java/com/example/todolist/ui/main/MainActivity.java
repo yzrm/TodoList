@@ -1,22 +1,26 @@
-package com.example.todolist;
+package com.example.todolist.ui.main;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.todolist.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -24,10 +28,15 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = "MainActivity";
 
+    private MainViewModel mainViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // ViewModelの生成
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         //fab
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -63,6 +72,12 @@ public class MainActivity extends AppCompatActivity
         //NavigationView Listener
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        mainViewModel.addNewTodoSheet("サンプル1");
     }
 
     @Override
