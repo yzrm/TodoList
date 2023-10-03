@@ -37,12 +37,10 @@
             app:layout_anchor="@+id/frameLayout"
             app:layout_anchorGravity="center">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Hello World!"
-                android:textSize="36sp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/todo_sheet_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab"
@@ -68,7 +66,8 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:paddingTop="?attr/actionBarSize"
-                android:background="@color/white">
+                android:background="@color/white"
+                android:fitsSystemWindows="true">
 
 
                 <View
@@ -79,16 +78,18 @@
                     android:layout_gravity="center"/>
 
                 <EditText
+                    android:id="@+id/list_name_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
+                    android:lines="1"
                     android:hint="@string/List_name"
                     android:maxLength="18"/>
 
             </LinearLayout>
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab2"
+                android:id="@+id/check_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
