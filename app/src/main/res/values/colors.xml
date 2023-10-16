@@ -8,4 +8,22 @@
     <color name="colorPrimaryDark">#388E3C</color>
     <color name="colorAccent">#FBB94D</color>
     <color name="colorDrawerHeader">#C655FF</color>
+
+    <!-- タスクカラー -->
+    <color name="colorTask1">#DA8B87</color>
+    <color name="colorTask2">#E17D9F</color>
+    <color name="colorTask3">#B87ECA</color>
+    <color name="colorTask4">#8D93CC</color>
+    <color name="colorTask5">#8B94CB</color>
+    <color name="colorTask6">#89BCF1</color>
+    <color name="colorTask7">#7EC7F2</color>
+    <color name="colorTask8">#81D3E1</color>
+    <color name="colorTask9">#7CBCB4</color>
+    <color name="colorTask10">#9CCD98</color>
+    <color name="colorTask11">#BFD998</color>
+    <color name="colorTask12">#E1E993</color>
+    <color name="colorTask13">#FCF195</color>
+    <color name="colorTask14">#F5C273</color>
+    <color name="colorTask15">#F19E7E</color>
+    <color name="colorTask16">#E4E4E4</color>
 </resources>
