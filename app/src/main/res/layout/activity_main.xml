@@ -135,45 +135,10 @@
             android:drawablePadding="20dp"
             app:drawableLeftCompat="@drawable/list" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="0dp"
-            android:gravity="center_vertical"
-            android:text="テスト"
-            android:drawablePadding="20dp"
-            app:drawableLeftCompat="@drawable/circle" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="0dp"
-            android:gravity="center_vertical"
-            android:text="テスト"
-            android:drawablePadding="20dp"
-            app:drawableLeftCompat="@drawable/circle" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="0dp"
-            android:gravity="center_vertical"
-            android:text="テスト"
-            android:drawablePadding="20dp"
-            app:drawableLeftCompat="@drawable/circle" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="0dp"
-            android:gravity="center_vertical"
-            android:text="テスト"
-            android:drawablePadding="20dp"
-            app:drawableLeftCompat="@drawable/circle" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/navigation_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </com.google.android.material.navigation.NavigationView>

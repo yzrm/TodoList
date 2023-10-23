@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.todolist.data.entities.TodoSheet;
 import com.example.todolist.data.repositories.ToDoListRepository;
-import com.example.todolist.ui.adapter.TodoSheetListAdapter;
 
 import java.util.Date;
 import java.util.List;
@@ -16,8 +15,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class MainViewModel extends ViewModel {
 
-    interface OnActionListener {
-        void getTodoSheetAll(List<TodoSheet> todoSheetList);
+    interface GetTodoSheetAll {
+        void onComplete(List<TodoSheet> todoSheetList);
+
+    }
+    interface  OnCompleteCallback{
+        void onComplete();
     }
 
     private ToDoListRepository repository;
@@ -26,7 +29,7 @@ public class MainViewModel extends ViewModel {
         this.repository = repository;
     }
 
-    public void addNewTodoSheet(String title){
+    public void addNewTodoSheet(String title, OnCompleteCallback callback){
         new Thread(){
             @Override
             public void run() {
@@ -36,17 +39,18 @@ public class MainViewModel extends ViewModel {
                 newSheet.createdAt = new Date();
 
                 repository.insertTodoSheet(newSheet);
+                callback.onComplete();
             }
         }.start();
     }
 
-    public void getTodoSheetAll(OnActionListener listener){
+    public void getTodoSheetAll(GetTodoSheetAll callback){
         new Thread(){
             @Override
-            public void run(){
+            public void run() {
                 super.run();
                 List<TodoSheet> todoSheetList = repository.getTodoSheetAll();
-                listener.getTodoSheetAll(todoSheetList);
+                callback.onComplete(todoSheetList);
             }
         }.start();
     }

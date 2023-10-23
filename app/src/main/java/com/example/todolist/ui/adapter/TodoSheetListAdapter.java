@@ -30,6 +30,11 @@ public class TodoSheetListAdapter extends RecyclerView.Adapter<TodoSheetListAdap
         this.todoSheetList = todoSheetList;
     }
 
+    public void updateTodoSheetList(List<TodoSheet> todoSheetList){
+        this.todoSheetList = todoSheetList;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
