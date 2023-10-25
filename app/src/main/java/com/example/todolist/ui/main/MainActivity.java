@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.todolist.R;
 import com.example.todolist.data.entities.TodoSheet;
+import com.example.todolist.ui.adapter.NavigationItemAdapter;
 import com.example.todolist.ui.adapter.TodoSheetListAdapter;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -96,6 +97,8 @@ public class MainActivity extends AppCompatActivity
                             runOnUiThread(() -> {
                                 ((TodoSheetListAdapter) recyclerView.getAdapter())
                                         .updateTodoSheetList(todoSheetList);
+                                ((NavigationItemAdapter) navigationRecyclerView.getAdapter())
+                                        .updateTodoSheetList(todoSheetList);
                             })
                     );
                     mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
@@ -145,6 +148,8 @@ public class MainActivity extends AppCompatActivity
 
     private void displayNavigationList(List<TodoSheet> todoSheetList){
         //TODO: Adapterの設定
+        NavigationItemAdapter adapter = new NavigationItemAdapter(todoSheetList);
+        navigationRecyclerView.setAdapter(adapter);
 
         //LayoutManagerの設定
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
