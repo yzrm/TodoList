@@ -15,6 +15,10 @@ import java.util.List;
 
 public class TodoSheetListAdapter extends RecyclerView.Adapter<TodoSheetListAdapter.ViewHolder> {
 
+
+    public interface OnclickTodoSheetListItemListener {
+        void onClickItem(TodoSheet itemData);
+    }
     class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView itemTitleText;
@@ -26,8 +30,10 @@ public class TodoSheetListAdapter extends RecyclerView.Adapter<TodoSheetListAdap
     }
 
     private List<TodoSheet> todoSheetList;
-    public TodoSheetListAdapter(List<TodoSheet> todoSheetList) {
+    private OnclickTodoSheetListItemListener listener;
+    public TodoSheetListAdapter(List<TodoSheet> todoSheetList, OnclickTodoSheetListItemListener listener) {
         this.todoSheetList = todoSheetList;
+        this.listener = listener;
     }
 
     public void updateTodoSheetList(List<TodoSheet> todoSheetList){
@@ -48,6 +54,11 @@ public class TodoSheetListAdapter extends RecyclerView.Adapter<TodoSheetListAdap
         TodoSheet data = todoSheetList.get(position);
         // タイトルを設定
         holder.itemTitleText.setText(data.title);
+        holder.itemView.setOnClickListener(view -> {
+            if (listener != null){
+                listener.onClickItem(data);
+            }
+        });
         // TODO: カラーを設定
     }
 

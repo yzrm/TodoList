@@ -16,42 +16,53 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.todolist.R;
 import com.example.todolist.data.entities.TodoSheet;
 import com.example.todolist.ui.adapter.NavigationItemAdapter;
 import com.example.todolist.ui.adapter.TodoSheetListAdapter;
+import com.example.todolist.ui.todoSheetDetail.TodoSheetDetailFragment;
+import com.example.todolist.ui.todoSheetList.TodoSheetListFragment;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import hilt_aggregated_deps._com_example_todolist_ui_main_MainViewModel_HiltModules_BindsModule;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity
-    implements View.OnKeyListener {
+    implements View.OnKeyListener, TodoSheetListFragment.TodoSheetListActionListener {
 
     BottomSheetBehavior mBottomSheetBehavior;
-
+    //TodoSheetListFragment
+    //TodoSheetDetailFragment
     private static final String TAG = "MainActivity";
 
     private MainViewModel mainViewModel;
-
+    private TodoSheetListFragment todoSheetListFragment;
+    private TodoSheetDetailFragment todoSheetDetailFragment;
+    private FrameLayout mainContainer;
     private EditText listNameEditText;
-    private RecyclerView recyclerView;
+
     private RecyclerView navigationRecyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //TodoSheetListFragmentのインスタンスを取得
+        todoSheetListFragment = TodoSheetListFragment.newInstance();
+        //Fragmentの追加
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.main_container, todoSheetListFragment)
+                .commitNow();
 
         listNameEditText = findViewById(R.id.list_name_edit_text);
         listNameEditText.setOnKeyListener(this);
 
-        // RecyclerViewの取得
-        recyclerView = findViewById(R.id.todo_sheet_recycler_view);
         navigationRecyclerView = findViewById(R.id.navigation_recycler_view);
 
         // ViewModelの生成
@@ -95,8 +106,9 @@ public class MainActivity extends AppCompatActivity
                     //  TODOSheet表示更新
                     mainViewModel.getTodoSheetAll(todoSheetList ->
                             runOnUiThread(() -> {
-                                ((TodoSheetListAdapter) recyclerView.getAdapter())
-                                        .updateTodoSheetList(todoSheetList);
+                                if (todoSheetListFragment != null){
+                                    todoSheetListFragment.updateTodoSheetListData(todoSheetList);
+                                }
                                 ((NavigationItemAdapter) navigationRecyclerView.getAdapter())
                                         .updateTodoSheetList(todoSheetList);
                             })
@@ -124,27 +136,12 @@ public class MainActivity extends AppCompatActivity
         // TODOSheetのデータを取得
         mainViewModel.getTodoSheetAll(todoSheetList ->
                 runOnUiThread(() -> {
-                    displayTodoSheetList(todoSheetList);
+                    //                   displayTodoSheetList(todoSheetList);
                     displayNavigationList(todoSheetList);
                 })
         );
     }
 
-    private void displayTodoSheetList(List<TodoSheet> todoSheetList){
-        // Adapterの設定
-        TodoSheetListAdapter adapter = new TodoSheetListAdapter(todoSheetList);
-        recyclerView.setAdapter(adapter);
-
-        // LayoutManagerの設定
-        GridLayoutManager layoutManager = new GridLayoutManager(
-                this,
-                2,
-                RecyclerView.VERTICAL,
-                false
-        );
-
-        recyclerView.setLayoutManager(layoutManager);
-    }
 
     private void displayNavigationList(List<TodoSheet> todoSheetList){
         //TODO: Adapterの設定
@@ -178,5 +175,25 @@ public class MainActivity extends AppCompatActivity
         InputMethodManager inputMethodManager =
                 (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    public void getTodoSheetListDate() {
+        mainViewModel.getTodoSheetAll(todoSheetList -> {
+            //Fragmentにデータを渡す処理
+            if (todoSheetListFragment != null){
+                todoSheetListFragment.updateTodoSheetListData(todoSheetList);
+            }
+        });
+    }
+
+    @Override
+    public void onClickTodoSheetItem(TodoSheet todoSheet) {
+        // TODO: TodoSheetデータを渡して遷移先で表示できるようにする。
+        todoSheetDetailFragment = TodoSheetDetailFragment.newInstance();
+        todoSheetListFragment = null;
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_container, todoSheetDetailFragment)
+                .commitNow();
     }
 }
