@@ -5,13 +5,14 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -87,36 +88,51 @@ public class MainActivity extends AppCompatActivity
         // プラスボタン
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-
-            if ( mBottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED ){
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            Fragment fragment =getSupportFragmentManager().findFragmentById(R.id.main_container);
+            //トップビューの場合
+            if (fragment instanceof TodoSheetListFragment) {
+                listNameEditText.setHint(getString(R.string.list_name));
+                if ( mBottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED ){
+                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }
+            //詳細表示の場合
+            }else if (fragment instanceof TodoSheetDetailFragment){
+                //TODO: 詳細画面の処理
+                listNameEditText.setHint(getString(R.string.todo));
+                Log.d("TEST","詳細画面で押されたよ。" );
+                //TODO: ボトムシートを表示する、内容を変更。
+                if ( mBottomSheetBehavior.getState() != BottomSheetBehavior.STATE_HALF_EXPANDED ) {
+                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+                }
             }
         });
 
         // チェックボタン
         FloatingActionButton checkBtn = findViewById(R.id.check_btn);
         checkBtn.setOnClickListener(view -> {
-            String listName = listNameEditText.getText().toString();
-            if (listName.isEmpty()) {
-                // チェックボタン押下時にリスト名が未入力の場合は警告ダイアログの表示。
-                Toast.makeText(this, R.string.input_list_name, Toast.LENGTH_SHORT).show();
-            } else {
-                // チェックボタンを押下で、DBにリスト名追加。
-                mainViewModel.addNewTodoSheet(listName, () -> {
-                    //  TODOSheet表示更新
-                    mainViewModel.getTodoSheetAll(todoSheetList ->
-                            runOnUiThread(() -> {
-                                if (todoSheetListFragment != null){
-                                    todoSheetListFragment.updateTodoSheetListData(todoSheetList);
-                                }
-                                ((NavigationItemAdapter) navigationRecyclerView.getAdapter())
-                                        .updateTodoSheetList(todoSheetList);
-                            })
-                    );
-                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-                });
-            }
+                // リスト画面の処理
+                String listName = listNameEditText.getText().toString();
+                if (listName.isEmpty()) {
+                    // チェックボタン押下時にリスト名が未入力の場合は警告ダイアログの表示。
+                    Toast.makeText(this, R.string.input_list_name, Toast.LENGTH_SHORT).show();
+                } else {
+                    // チェックボタンを押下で、DBにリスト名追加。
+                    mainViewModel.addNewTodoSheet(listName, () -> {
+                        //  TODOSheet表示更新
+                        mainViewModel.getTodoSheetAll(todoSheetList ->
+                                runOnUiThread(() -> {
+                                    if (todoSheetListFragment != null) {
+                                        todoSheetListFragment.updateTodoSheetListData(todoSheetList);
+                                    }
+                                    ((NavigationItemAdapter) navigationRecyclerView.getAdapter())
+                                            .updateTodoSheetList(todoSheetList);
+                                })
+                        );
+                        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                    });
+                }
         });
+        //TODO:アイテムが追加されるようにする
 
         //Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -190,10 +206,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClickTodoSheetItem(TodoSheet todoSheet) {
         // TODO: TodoSheetデータを渡して遷移先で表示できるようにする。
-        todoSheetDetailFragment = TodoSheetDetailFragment.newInstance();
-        todoSheetListFragment = null;
+        todoSheetDetailFragment = TodoSheetDetailFragment.newInstance(todoSheet.id, todoSheet.title);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_container, todoSheetDetailFragment)
-                .commitNow();
+                .addToBackStack(null)
+                .commit();
     }
 }

@@ -62,33 +62,33 @@
             app:behavior_peekHeight="0dp"
             app:behavior_hideable="true">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingTop="?attr/actionBarSize"
-                android:background="@color/white"
-                android:fitsSystemWindows="true">
-
-
-                <View
-                    android:layout_width="45dp"
-                    android:layout_height="5dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@color/gray"
-                    android:layout_gravity="center"/>
-
-                <EditText
-                    android:id="@+id/list_name_edit_text"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:lines="1"
-                    android:hint="@string/List_name"
-                    android:maxLength="18"/>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingTop="?attr/actionBarSize"
+                    android:background="@color/white"
+                    android:fitsSystemWindows="true">
 
-            </LinearLayout>
+                    <View
+                        android:layout_width="45dp"
+                        android:layout_height="5dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@color/gray"
+                        android:layout_gravity="center"/>
+
+                    <EditText
+                        android:id="@+id/list_name_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:lines="1"
+                        android:hint="@string/list_name"
+                        android:maxLength="18"/>
+
+                </LinearLayout>
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/check_btn"
                 android:layout_width="wrap_content"

@@ -2,7 +2,8 @@
     <string name="app_name">ToDoList</string>
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_close">Drawer Close</string>
-    <string name="List_name">リスト名</string>
+    <string name="list_name">リスト名</string>
+    <string name="todo">やること</string>
     <string name="action_settings">Settings</string>
     <string name="input_list_name">リスト名を入力してください</string>
 </resources>
