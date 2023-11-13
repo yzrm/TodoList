@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -18,6 +19,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.todolist.R;
@@ -64,6 +67,8 @@ public class MainActivity extends AppCompatActivity
         listNameEditText = findViewById(R.id.list_name_edit_text);
         listNameEditText.setOnKeyListener(this);
 
+        ImageButton todoAddBtn = findViewById(R.id.todo_add_btn);
+
         navigationRecyclerView = findViewById(R.id.navigation_recycler_view);
 
         // ViewModelの生成
@@ -92,18 +97,22 @@ public class MainActivity extends AppCompatActivity
             //トップビューの場合
             if (fragment instanceof TodoSheetListFragment) {
                 listNameEditText.setHint(getString(R.string.list_name));
+                todoAddBtn.setVisibility(View.GONE);
                 if ( mBottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED ){
                     mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                 }
             //詳細表示の場合
             }else if (fragment instanceof TodoSheetDetailFragment){
-                //TODO: 詳細画面の処理
+                //ボトムシートを表示する、内容を変更。
                 listNameEditText.setHint(getString(R.string.todo));
+                todoAddBtn.setVisibility(View.VISIBLE);
+                todoAddBtn.setColorFilter(Color.GRAY);
                 Log.d("TEST","詳細画面で押されたよ。" );
-                //TODO: ボトムシートを表示する、内容を変更。
                 if ( mBottomSheetBehavior.getState() != BottomSheetBehavior.STATE_HALF_EXPANDED ) {
                     mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
                 }
+                //TODO: 詳細画面の処理
+
             }
         });
 
