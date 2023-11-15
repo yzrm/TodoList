@@ -16,4 +16,7 @@ public interface TodoItemDao {
 
     @Query("SELECT * FROM todoitem")
     List<TodoItem> getAll();
+
+    @Query("SELECT * FROM todoitem WHERE todo_sheet_id = :todoSheetId")
+    List<TodoItem> getTodoItemListById(int todoSheetId);
 }
