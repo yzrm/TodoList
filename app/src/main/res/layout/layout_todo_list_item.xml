@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="64dp"
+    android:layout_height="32dp"
+    android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingStart="16dp">
+
+    <View
+        android:id="@+id/check_icon"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:background="@drawable/ic_item_circle"/>
 
     <TextView
         android:id="@+id/todo_item_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:layout_gravity="center_vertical"
-        tools:text="やること！"/>
+        android:text="チュートリアル"
+        android:textSize="14sp"
+        android:layout_marginStart="16dp"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
