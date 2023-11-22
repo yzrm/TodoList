@@ -24,14 +24,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolist.R;
+import com.example.todolist.data.entities.TodoData;
 import com.example.todolist.data.entities.TodoItem;
 import com.example.todolist.data.entities.TodoSheet;
 import com.example.todolist.ui.adapter.NavigationItemAdapter;
 import com.example.todolist.ui.todoSheetDetail.TodoSheetDetailFragment;
 import com.example.todolist.ui.todoSheetList.TodoSheetListFragment;
+import com.example.todolist.util.TodoDataConverter;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -197,17 +200,25 @@ public class MainActivity extends AppCompatActivity
                 // チェックボタンを押下で、DBにリスト名追加。
                 mainViewModel.addNewTodoSheet(listName, () -> {
                     //  TODOSheet表示更新
-                    mainViewModel.getTodoSheetAll(todoSheetList ->
-                            runOnUiThread(() -> {
-                                if (todoSheetListFragment != null) {
-                                    todoSheetListFragment.updateTodoSheetListData(todoSheetList);
-                                }
-                                ((NavigationItemAdapter) navigationRecyclerView.getAdapter())
-                                        .updateTodoSheetList(todoSheetList);
-                                //EditTextをクリアする。
-                                listNameEditText.setText("");
-                            })
-                    );
+                    mainViewModel.getTodoSheetAll(todoSheetList -> {
+                        List<TodoData> todoDataList = new ArrayList<>();
+                        for (TodoSheet todoSheet : todoSheetList) {
+                            mainViewModel.getTodoItemListById(todoSheet.id, todoItemList -> {
+                                // シートと項目が一つになったデータを作成する
+                                TodoData todoData = TodoDataConverter.toTodoData(todoSheet, todoItemList);
+                                todoDataList.add(todoData);
+                            });
+                        }
+                        runOnUiThread(() -> {
+                            if (todoSheetListFragment != null) {
+                                todoSheetListFragment.updateTodoDataList(todoDataList);
+                            }
+                            ((NavigationItemAdapter) navigationRecyclerView.getAdapter())
+                                    .updateTodoSheetList(todoSheetList);
+                            //EditTextをクリアする。
+                            listNameEditText.setText("");
+                        });
+                    });
                     mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 });
             }
@@ -269,17 +280,28 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void getTodoSheetListDate() {
         mainViewModel.getTodoSheetAll(todoSheetList -> {
-            //Fragmentにデータを渡す処理
-            if (todoSheetListFragment != null){
-                todoSheetListFragment.updateTodoSheetListData(todoSheetList);
+            List<TodoData> todoDataList = new ArrayList<>();
+            for (TodoSheet todoSheet : todoSheetList){
+                mainViewModel.getTodoItemListById(todoSheet.id, todoItemList -> {
+                    // シートと項目が一つになったデータを作成する
+                    TodoData todoData = TodoDataConverter.toTodoData(todoSheet, todoItemList);
+                    todoDataList.add(todoData);
+                });
             }
+
+            runOnUiThread(() -> {
+                //Fragmentにデータを渡す処理
+                if (todoSheetListFragment != null) {
+                    todoSheetListFragment.updateTodoDataList(todoDataList);
+                }
+            });
         });
     }
 
     @Override
-    public void onClickTodoSheetItem(TodoSheet todoSheet) {
+    public void onClickTodoSheetItem(TodoData todoData) {
         // TODO: TodoSheetデータを渡して遷移先で表示できるようにする。
-        todoSheetDetailFragment = TodoSheetDetailFragment.newInstance(todoSheet.id, todoSheet.title);
+        todoSheetDetailFragment = TodoSheetDetailFragment.newInstance(todoData.getId(), todoData.getTitle());
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_container, todoSheetDetailFragment)
                 .addToBackStack(null)
