@@ -19,4 +19,7 @@ public interface TodoItemDao {
 
     @Query("SELECT * FROM todoitem WHERE todo_sheet_id = :todoSheetId")
     List<TodoItem> getTodoItemListById(int todoSheetId);
+
+    @Query("SELECT COUNT(*) FROM todoitem WHERE todo_sheet_id = :todoSheetId")
+    int getItemCount(int todoSheetId);
 }

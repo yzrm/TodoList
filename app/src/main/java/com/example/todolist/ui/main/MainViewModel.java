@@ -17,6 +17,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class MainViewModel extends ViewModel {
 
+    private static final int MAX_TODO_ITEM_SIZE = 8;
     interface GetTodoSheetAll {
         void onComplete(List<TodoSheet> todoSheetList);
 
@@ -84,5 +85,9 @@ public class MainViewModel extends ViewModel {
                 callback.onComplete(todoItemList);
             }
         }.start();
+    }
+    public Boolean canAddedTodoItem(int todoSheetId){
+        int itemCount = repository.getTodoItemCount(todoSheetId);
+        return itemCount < MAX_TODO_ITEM_SIZE;
     }
 }

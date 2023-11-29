@@ -1,5 +1,6 @@
 package com.example.todolist.ui.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class TodoSheetListAdapter extends RecyclerView.Adapter<TodoSheetListAdapter.ViewHolder> {
 
-
+    private static final String TAG = TodoSheetListAdapter.class.getSimpleName();
     public interface OnclickTodoSheetListItemListener {
         void onClickItem(TodoData itemData);
     }
@@ -71,6 +72,10 @@ public class TodoSheetListAdapter extends RecyclerView.Adapter<TodoSheetListAdap
 
         public void itemLayoutVisible(List<Todo> todoList){
             for (int i = 0; i < todoList.size(); i++){
+                if (i > 7) {
+                    Log.w(TAG, "size exceeds maximum value.");
+                    return;
+                }
                 Todo todo = todoList.get(i);
                 itemLayoutList.get(i).setVisibility(View.VISIBLE);
                 int resId;

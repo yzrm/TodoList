@@ -41,4 +41,7 @@ public class ToDoListRepository {
     public List<TodoItem> getTodoItemListById(int todoSheetId) {
         return todoItemDao.getTodoItemListById(todoSheetId);
     }
+    public int getTodoItemCount(int todoSheetId){
+        return todoItemDao.getItemCount(todoSheetId);
+    }
 }

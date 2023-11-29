@@ -107,10 +107,13 @@ public class TodoSheetDetailFragment extends Fragment {
         return todoSheetId;
     }
     public void updateTodoItemListData(List<TodoItem> todoItemList){
-        getActivity().runOnUiThread(() -> {
-            ((TodoItemListAdapter) recyclerView.getAdapter()).updateTodoItemList(todoItemList);
-        });
+        if (getActivity() != null){
+            getActivity().runOnUiThread(() -> {
+                ((TodoItemListAdapter) recyclerView.getAdapter()).updateTodoItemList(todoItemList);
+            });
+        }
     }
+
 
     class TodoItemListAdapter extends RecyclerView.Adapter<TodoItemViewHolder> {
         private List<TodoItem> todoItemList = new ArrayList<>();

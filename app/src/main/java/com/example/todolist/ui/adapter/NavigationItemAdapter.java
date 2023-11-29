@@ -15,7 +15,9 @@ import java.util.List;
 
 public class NavigationItemAdapter extends RecyclerView.Adapter<NavigationItemAdapter.ViewHolder>{
 
-
+    public interface OnClickItemListener {
+        void onClickItem(TodoSheet todoSheet);
+    }
     class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView itemTitleText;
@@ -25,6 +27,7 @@ public class NavigationItemAdapter extends RecyclerView.Adapter<NavigationItemAd
         }
     }
     private List<TodoSheet> todoSheetList;
+    private OnClickItemListener listener;
     public NavigationItemAdapter(List<TodoSheet> todoSheetList) {
         this.todoSheetList = todoSheetList;
     }
@@ -44,14 +47,24 @@ public class NavigationItemAdapter extends RecyclerView.Adapter<NavigationItemAd
 
     @Override
     public void onBindViewHolder(@NonNull NavigationItemAdapter.ViewHolder holder, int position) {
-    TodoSheet data =todoSheetList.get(position);
+        TodoSheet data = todoSheetList.get(position);
         //タイトルを設定
         holder.itemTitleText.setText(data.title);
         //TODO:カラー設定
+        holder.itemView.setOnClickListener(view -> {
+            // アイテムクリック処理
+            if (listener != null){
+                listener.onClickItem(data);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return todoSheetList.size();
+    }
+
+    public void setOnClickItemListener(OnClickItemListener listener) {
+        this.listener = listener;
     }
 }

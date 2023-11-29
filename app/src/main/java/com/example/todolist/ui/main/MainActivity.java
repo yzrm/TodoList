@@ -3,6 +3,7 @@ package com.example.todolist.ui.main;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -241,11 +242,49 @@ public class MainActivity extends AppCompatActivity
                 R.string.drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        // 全てのタスクのタップ処理設定
+        findViewById(R.id.all_task).setOnClickListener(view -> {
+            // TOP画面を表示する
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
+            if (fragment instanceof TodoSheetDetailFragment) {
+                // 詳細画面の場合はTOP画面を表示する
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_container, todoSheetListFragment)
+                        .commit();
+            }
+            // ドロワーを閉じる
+            drawer.closeDrawer(GravityCompat.START);
+        });
     }
 
     private void displayNavigationList(List<TodoSheet> todoSheetList){
-        //TODO: Adapterの設定
+        //Adapterの設定
         NavigationItemAdapter adapter = new NavigationItemAdapter(todoSheetList);
+        // クリック用のリスナーを設定
+        adapter.setOnClickItemListener(todoSheet -> {
+            // アイテムクリック時の処理
+            // 表示されている画面を確認。
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
+            if (fragment instanceof TodoSheetListFragment) {
+                // トップ画面の場合
+                // 詳細画面を表示する
+                mainViewModel.getTodoItemListById(todoSheet.id, todoItemList -> {
+                    // シートと項目が一つになったデータを作成する
+                    TodoData todoData = TodoDataConverter.toTodoData(todoSheet, todoItemList);
+                    onClickTodoSheetItem(todoData);
+                });
+            } else if (fragment instanceof TodoSheetDetailFragment){
+                // 詳細画面の場合
+                // タップされたアイテムの表示を切り替える
+                todoSheetDetailFragment = TodoSheetDetailFragment.newInstance(todoSheet.id, todoSheet.title);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_container, todoSheetDetailFragment)
+                        .commit();
+            }
+            // ドロワーメニューを閉じる
+            drawer.closeDrawer(GravityCompat.START);
+        });
         navigationRecyclerView.setAdapter(adapter);
 
         //LayoutManagerの設定
@@ -300,7 +339,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onClickTodoSheetItem(TodoData todoData) {
-        // TODO: TodoSheetデータを渡して遷移先で表示できるようにする。
         todoSheetDetailFragment = TodoSheetDetailFragment.newInstance(todoData.getId(), todoData.getTitle());
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_container, todoSheetDetailFragment)
