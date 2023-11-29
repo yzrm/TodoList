@@ -39,10 +39,11 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/todo_item_layout_1"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingStart="16dp"
+            android:layout_marginTop="12dp"
+            android:paddingBottom="4dp"
             android:visibility="gone">
 
             <View
@@ -64,10 +65,10 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/todo_item_layout_2"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingStart="16dp"
+            android:paddingBottom="4dp"
             android:visibility="gone">
 
             <View
@@ -89,10 +90,10 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/todo_item_layout_3"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingStart="16dp"
+            android:paddingBottom="4dp"
             android:visibility="gone">
 
             <View
@@ -114,10 +115,10 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/todo_item_layout_4"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingStart="16dp"
+            android:paddingBottom="4dp"
             android:visibility="gone">
 
             <View
@@ -139,10 +140,10 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/todo_item_layout_5"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingStart="16dp"
+            android:paddingBottom="4dp"
             android:visibility="gone">
 
             <View
@@ -164,10 +165,10 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/todo_item_layout_6"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingStart="16dp"
+            android:paddingBottom="4dp"
             android:visibility="gone">
 
             <View
@@ -189,10 +190,10 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/todo_item_layout_7"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingStart="16dp"
+            android:paddingBottom="4dp"
             android:visibility="gone">
 
             <View
@@ -214,10 +215,10 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/todo_item_layout_8"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingStart="16dp"
+            android:paddingBottom="4dp"
             android:visibility="gone">
 
             <View
